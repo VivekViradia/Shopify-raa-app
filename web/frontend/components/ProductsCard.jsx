@@ -51,10 +51,10 @@ export function ProductsCard() {
 
   const fetchProducts = async () => {
     setIsLoading(true);
-    const response = await fetch("/api/products")
-    setIsLoading(false)
+    const response = await fetch("/api/products");
+    setIsLoading(false);
     console.log(await response.json());
-  }
+  };
 
   return (
     <>
@@ -86,4 +86,3 @@ export function ProductsCard() {
     </>
   );
 }
-  
