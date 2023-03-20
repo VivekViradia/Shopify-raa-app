@@ -63,7 +63,7 @@ export function ProductsCard() {
         title="Product Counter"
         sectioned
         primaryFooterAction={{
-          content: "fetch products",
+          content: "Fetch Products",
           onAction: fetchProducts,
           loading: isLoading,
         }}

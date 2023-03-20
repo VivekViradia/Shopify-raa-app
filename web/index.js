@@ -36,18 +36,15 @@ app.use("/api/*", shopify.validateAuthenticatedSession());
 
 app.use(express.json());
 
-app.get("/api/products/", async (req, res) => {
+app.get('/api/products/', async (req, res) => {
   // @ts-ignore
-  const session = await Shopify.Utils.loadCurrentSession(
-    req,
-    res,
-    app.get("use-online-tokens")
-  );
+  const session = await Shopify.Utils.loadCurrentSession(req, res, app.get('use-online-tokens'))
+  
+  const products = []
 
-  const products = [];
+  res.status(200).send({products})
+})
 
-  res.status(200).send({ products });
-});
 
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({
@@ -69,6 +66,8 @@ app.get("/api/products/create", async (_req, res) => {
   }
   res.status(status).send({ success: status === 200, error });
 });
+
+
 
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
