@@ -137,3 +137,4 @@ function randomPrice() {
 function randomImage() {
   return IMAGES[Math.floor(Math.random() * IMAGES.length)];
 }
+

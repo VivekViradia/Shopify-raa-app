@@ -52,13 +52,18 @@ export function ProductsCard() {
   const fetchProducts = async () => {
     setIsLoading(true);
     const response = await fetch("/api/products");
-    setIsLoading(false);
-    console.log(await response.json());
+    
+      setIsLoading(false)
+    if (response.ok) {
+      console.log(await response.json());
+    } else {
+      console.log("Error in Logging Products list")
+    }
   };
 
   return (
     <>
-      {toastMarkup}
+      {toastMarkup}                     
       <Card
         title="Product Counter"
         sectioned

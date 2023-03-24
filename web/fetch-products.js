@@ -1,5 +1,5 @@
 // import { Shopify } from "@shopify/shopify-api";
-import shopify from "./shopify";
+import shopify from "./shopify.js";
 
 
 const FETCH_PRODUCTS_QUERY = `{
@@ -14,7 +14,7 @@ const FETCH_PRODUCTS_QUERY = `{
     }`
 
 export default async function fetchProducts(session) {
-  const client = new shopify.client.Graphql(
+  const client = new shopify.api.clients.Graphql(
     session?.shop,
     session?.accessToken
     );

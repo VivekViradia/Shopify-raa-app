@@ -7,7 +7,9 @@ import Shopify from "@shopify/shopify-api";
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
+import fetchProducts from "./fetch-products.js";
 
+// @ts-ignore
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
 const STATIC_PATH =
@@ -36,14 +38,28 @@ app.use("/api/*", shopify.validateAuthenticatedSession());
 
 app.use(express.json());
 
+
+
 app.get('/api/products/', async (req, res) => {
   // @ts-ignore
-  const session = await Shopify.Utils.loadCurrentSession(req, res, app.get('use-online-tokens'))
+  const session = res.locals.shopify.session
+  console.log("Session",session)
   
-  const products = []
+  const products = await fetchProducts(session)
 
   res.status(200).send({products})
 })
+
+// app.get("/api/products", async (ctx) => {
+//   console.log("before load session");
+//   const session = await Shopify.Utils.loadCurrentSession(
+//     // @ts-ignore
+//     ctx.req,
+//     ctx.res,
+//     false
+//   );
+//   console.log("session", session); // <= RETURNS UNDEFINED
+// });
 
 
 app.get("/api/products/count", async (_req, res) => {

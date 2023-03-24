@@ -14,7 +14,8 @@
   "dependencies": {
     "@shopify/app": "3.44.1",
     "@shopify/cli": "3.44.1",
-    "@shopify/shopify-api": "^6.2.0"
+    "@shopify/shopify-api": "^6.2.0",
+    "shopify-node-api": "^1.11.1"
   },
   "author": "vivek"
 }
