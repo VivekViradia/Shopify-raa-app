@@ -28,6 +28,7 @@ app.get(
 );
 app.post(
   shopify.config.webhooks.path,
+  // @ts-ignore
   shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
 );
 
@@ -38,30 +39,34 @@ app.use("/api/*", shopify.validateAuthenticatedSession());
 
 app.use(express.json());
 
+//-----------------------------------------
 
-
-app.get('/api/products/', async (req, res) => {
-  // @ts-ignore
+app.get('/api/products', async (req, res) => {
   const session = res.locals.shopify.session
+  const client = new shopify.api.clients.Graphql({session})
   console.log("Session",session)
   
-  const products = await fetchProducts(session)
+  const Query_Fetch_Product = `{
+    products(first:10){
+      edges{
+        node{
+          id
+          title
+        }
+      }
+    }
+  }`
+  
+  const data = await client.query({
+    data:Query_Fetch_Product
+  })
 
-  res.status(200).send({products})
+  // const products = await fetchProducts(session)
+
+  res.status(200).send({data})
 })
 
-// app.get("/api/products", async (ctx) => {
-//   console.log("before load session");
-//   const session = await Shopify.Utils.loadCurrentSession(
-//     // @ts-ignore
-//     ctx.req,
-//     ctx.res,
-//     false
-//   );
-//   console.log("session", session); // <= RETURNS UNDEFINED
-// });
-
-
+//-----------------------------
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({
     session: res.locals.shopify.session,
@@ -69,6 +74,7 @@ app.get("/api/products/count", async (_req, res) => {
   res.status(200).send(countData);
 });
 
+//---------------------------------------------
 app.get("/api/products/create", async (_req, res) => {
   let status = 200;
   let error = null;

@@ -14,14 +14,19 @@ const FETCH_PRODUCTS_QUERY = `{
     }`
 
 export default async function fetchProducts(session) {
-  const client = new shopify.api.clients.Graphql(
-    session?.shop,
-    session?.accessToken
-    );
-    const res = await client.query({
-        data: {
-            query:FETCH_PRODUCTS_QUERY
-        }
-    })
+  if (session) {
+    
+    console.log("Graphql Query",Object.keys(session),"TOKEN",session.accessToken)
+    const client = new shopify.api.clients.Graphql(
+      session?.shop,
+      session?.accessToken
+      );
+      const res = await client.query({
+          data: {
+              query:FETCH_PRODUCTS_QUERY
+          }
+      })
     return res
+  }
+   
 }

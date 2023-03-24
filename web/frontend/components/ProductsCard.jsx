@@ -52,18 +52,16 @@ export function ProductsCard() {
   const fetchProducts = async () => {
     setIsLoading(true);
     const response = await fetch("/api/products");
-    
-      setIsLoading(false)
-    if (response.ok) {
-      console.log(await response.json());
-    } else {
-      console.log("Error in Logging Products list")
-    }
+    setIsLoading(false);
+    const data = await response.json()
+    const product_data = data.data.body.data.products.edges
+    console.log("DATTAAAAAA",product_data)
+    console.log("Product Details",await response.json());
   };
 
   return (
     <>
-      {toastMarkup}                     
+      {toastMarkup}
       <Card
         title="Product Counter"
         sectioned
@@ -91,6 +89,3 @@ export function ProductsCard() {
     </>
   );
 }
-
-
-
