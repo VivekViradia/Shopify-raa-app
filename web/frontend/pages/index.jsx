@@ -18,17 +18,20 @@ import { useAppQuery } from "../hooks";
 export default function HomePage() {
   const { data, isLoading, refetch, isRefetching } = useAppQuery({ url: "/api/products" });
   
-  console.log("Data:",data)
+  if (data) {
+     console.log("Data:",data)
+  }
+ 
 
   return (
-    <Page>
-      <TitleBar title="App name" primaryAction={null} />
+    <Page title="DashBoard">
+      
       <Layout>
         <Layout.Section>
           <ProductsCard />
         </Layout.Section>
         <Layout.Section>
-          <ProductCard />
+          <ProductCard {...data?.products[0]} />
         </Layout.Section>
       </Layout>
     </Page>
