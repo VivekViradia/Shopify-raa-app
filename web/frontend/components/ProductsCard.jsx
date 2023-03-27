@@ -6,14 +6,15 @@ import {
   DisplayText,
   TextStyle,
 } from "@shopify/polaris";
-import { Toast } from "@shopify/app-bridge-react";
+import { Toast, useNavigate } from "@shopify/app-bridge-react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 
 export function ProductsCard() {
   const emptyToastProps = { content: null };
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [toastProps, setToastProps] = useState(emptyToastProps);
   const fetch = useAuthenticatedFetch();
+  const navigate = useNavigate();
 
   const {
     data,
@@ -49,14 +50,15 @@ export function ProductsCard() {
     }
   };
 
+  // Fetching Product Data
   const fetchProducts = async () => {
     setIsLoading(true);
     const response = await fetch("/api/products");
     setIsLoading(false);
+    // console.log("Before JASON", await response.json())
     const data = await response.json()
-    const product_data = data.data.body.data.products.edges
+    const product_data = data.products.body.data.products.edges
     console.log("DATTAAAAAA",product_data)
-    console.log("Product Details",await response.json());
   };
 
   return (
@@ -70,20 +72,15 @@ export function ProductsCard() {
           onAction: fetchProducts,
           loading: isLoading,
         }}
+        secondaryFooterActions={[
+          {
+            content: "View All Products",
+            onAction: () => navigate({ name: "Product" }, { target: "new" }),
+          },
+        ]}
       >
         <TextContainer spacing="loose">
-          <p>
-            Sample products are created with a default title and price. You can
-            remove them at any time.
-          </p>
-          <Heading element="h4">
-            TOTAL PRODUCTS
-            <DisplayText size="medium">
-              <TextStyle variation="strong">
-                {isLoadingCount ? "-" : data.count}
-              </TextStyle>
-            </DisplayText>
-          </Heading>
+         <p>Use this nifty tool to create and update products</p>
         </TextContainer>
       </Card>
     </>
