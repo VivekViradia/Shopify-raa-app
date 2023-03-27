@@ -13,8 +13,8 @@ export const ProductList = ({ data, isLoading, IsReftching }) => {
   return (
     <Layout>
       {data?.products.length ? (
-        data.products.map((product) => (
-          <Layout.Section>
+        data.products.map((product,index) => (
+          <Layout.Section key={index}>
             <ProductCard {...product}></ProductCard>
           </Layout.Section>
         ))

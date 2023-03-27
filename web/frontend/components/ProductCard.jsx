@@ -1,6 +1,11 @@
-import { Card, Stack, FormLayout, TextField } from "@shopify/polaris";
+import { Card, Stack, FormLayout, TextField, Button } from "@shopify/polaris";
+import { useState } from "react";
 
 export const ProductCard = (props) => {
+  const [title, setTitle] = useState(props.title);
+  const [description, setDescription] = useState(props.description);
+  const [price, setPrice] = useState(props.variants[0].price);
+
   return (
     <Card
       sectioned
@@ -18,18 +23,18 @@ export const ProductCard = (props) => {
         </Stack.Item>
         <Stack.Item fill>
           <FormLayout>
-            <TextField label="Product Title" value={props.title}></TextField>
+            <TextField
+              label="Product Title"
+              value={title}
+              onChange={setTitle}
+            ></TextField>
             <TextField
               multiline={4}
               label="Product Description"
-              value={props.description}
+              value={description}
+              onChange={setDescription}
             ></TextField>
-            {props.variants && props.variants[0].price && (
-              <TextField
-                label="Product Price"
-                value={props.variants[0].price}
-              ></TextField>
-            )}
+            <Button>Show Variants</Button>
           </FormLayout>
         </Stack.Item>
       </Stack>
