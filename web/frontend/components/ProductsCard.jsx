@@ -50,16 +50,16 @@ export function ProductsCard() {
     }
   };
 
-  // Fetching Product Data
-  const fetchProducts = async () => {
-    setIsLoading(true);
-    const response = await fetch("/api/products");
-    setIsLoading(false);
-    // console.log("Before JASON", await response.json())
-    const data = await response.json()
-    const product_data = data.products.body.data.products.edges
-    console.log("DATTAAAAAA",product_data)
-  };
+  // // Fetching Product Data
+  // const fetchProducts = async () => {
+  //   setIsLoading(true);
+  //   const response = await fetch("/api/products");
+  //   setIsLoading(false);
+  //   // console.log("Before JASON", await response.json())
+  //   const data = await response.json()
+  //   const product_data = data.products.body.data.products.edges
+  //   console.log("DATTAAAAAA",product_data)
+  // };
 
   return (
     <>
@@ -69,7 +69,7 @@ export function ProductsCard() {
         sectioned
         primaryFooterAction={{
           content: "Fetch Products",
-          onAction: fetchProducts,
+          onAction: handlePopulate,
           loading: isLoading,
         }}
         secondaryFooterActions={[
