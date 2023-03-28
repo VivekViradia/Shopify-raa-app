@@ -30,6 +30,7 @@ import {
     const onUpdate = async () => {
       setIsUpdating(true);
   
+      // This would be passed dirctly to the product-updater.js , productUpdater function paramter
       const updatedProduct = {
         id: props.id,
         title,
