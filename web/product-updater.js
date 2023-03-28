@@ -1,5 +1,5 @@
 import { Shopify } from "@shopify/shopify-api";
-import shopify from "./shopify"
+import shopify from "./shopify.js"
 
 const UPDATE_PRODUCT_MUTATION = `
 mutation updateProduct($input: ProductInput!) {
@@ -25,7 +25,7 @@ export default async function productUpdater(
   session,
   { id, description, title, variants }
 ) {
-  const client = new shopify.Clients.Graphql(session.shop, session.accessToken);
+  const client = new shopify.api.clients.Graphql({session});
 
   try {
     await client.query({

@@ -8,6 +8,7 @@ import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 import fetchProducts from "./fetch-products.js";
+import productUpdater from "./product-updater.js";
 
 // @ts-ignore
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
@@ -68,13 +69,14 @@ app.get('/api/products', async (req, res) => {
 //--------------------------------------------
 
 app.post("/api/products/update", async (_req, res) => {
+  const session = res.locals.shopify.session
   let status = 200;
   let error = null;
-
+console.log(_req.body)
   try {
-    await productCreator(res.locals.shopify.session);
+    await productUpdater(session, _req.body);
   } catch (e) {
-    console.log(`Failed to process products/create: ${e.message}`);
+    console.log(`Failed to process products/update: ${e.message}`);
     status = 500;
     error = e.message;
   }
